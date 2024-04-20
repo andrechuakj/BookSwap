@@ -3,13 +3,13 @@ import { getAuth } from "firebase/auth";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDqDll033OZQnBSuagZvVuky6vDVc-XIOQ",
-  authDomain: "bookswap-f743c.firebaseapp.com",
-  projectId: "bookswap-f743c",
-  storageBucket: "bookswap-f743c.appspot.com",
-  messagingSenderId: "381092959790",
-  appId: "1:381092959790:web:04ee7d520c6d9294b8b1bf",
-  measurementId: "G-DL82X0QKQ5",
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID,
+  measurementId: import.meta.env.VITE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase

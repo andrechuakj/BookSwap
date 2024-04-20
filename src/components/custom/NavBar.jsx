@@ -1,12 +1,21 @@
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import SignInButton from "./SignInButton";
-import LogOutButton from "./LogOutButton";
 import { auth } from "../../firebase";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AuthContext } from "@/contexts/AuthProvider";
+import { MessageCircle } from "lucide-react";
+import { ProfileDropDown } from "@/components/custom/ProfileDropDown";
+import { useLocation } from "react-router-dom";
 
 const NavBar = () => {
   const { user } = useContext(AuthContext);
+  const location = useLocation().pathname;
+  console.log(location.pathname);
+  const menustyle = {
+    active:
+      "border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium",
+    inactive:
+      "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium",
+  };
 
   return (
     <>
@@ -23,14 +32,20 @@ const NavBar = () => {
                 {auth.currentUser && (
                   <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
                     <a
-                      href="/"
-                      className="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                      href="/home"
+                      className={
+                        location === "/home" ? menustyle.active : menustyle.inactive
+                      }
                     >
                       Home
                     </a>
                     <a
-                      href="#"
-                      className="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                      href="/locations"
+                      className={
+                        location === "/locations"
+                          ? menustyle.active
+                          : menustyle.inactive
+                      }
                     >
                       Locations
                     </a>
@@ -40,15 +55,11 @@ const NavBar = () => {
               <div className="hidden sm:ml-6 sm:flex sm:items-center">
                 {!user && <SignInButton />}
                 {user && (
-                  <Avatar className="mr-6">
-                    <AvatarImage
-                      src={auth.currentUser.photoURL}
-                      alt="@shadcn"
-                    />
-                    <AvatarFallback>NA</AvatarFallback>
-                  </Avatar>
+                  <>
+                    <MessageCircle size={33} absoluteStrokeWidth={true} />
+                    <ProfileDropDown />
+                  </>
                 )}
-                {user && <LogOutButton />}
               </div>
             </div>
           </div>

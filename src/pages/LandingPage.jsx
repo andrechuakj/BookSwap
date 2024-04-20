@@ -1,11 +1,9 @@
 import GetStartedButton from "@/components/custom/GetStartedButton";
-import NavBar from "@/components/custom/NavBar";
 import React from "react";
 
 const LandingPage = () => {
   return (
     <>
-
       <div>
         <section className="hero bg-gray-900 text-white py-20">
           <div className="container mx-auto text-center">
