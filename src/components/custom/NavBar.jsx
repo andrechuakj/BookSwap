@@ -1,7 +1,19 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import SignInButton from "./SignInButton";
+import LogOutButton from "./LogOutButton";
+import { auth } from "../../firebase";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const NavBar = () => {
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setCurrentUser(user);
+    });
+
+    return () => unsubscribe();
+  }, []);
   return (
     <>
       <header>
@@ -10,25 +22,39 @@ const NavBar = () => {
             <div className="flex justify-between h-16">
               <div className="flex">
                 <div className="flex-shrink-0 flex items-center">
-                  <span className="font-semibold text-lg">BookSwap</span>
-                </div>
-                <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
-                  <a
-                    href="/"
-                    className="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-                  >
-                    Home
-                  </a>
-                  <a
-                    href="#"
-                    className="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-                  >
-                    Locations
+                  <a className="font-semibold text-lg" href="/">
+                    BookSwap
                   </a>
                 </div>
+                {auth.currentUser && (
+                  <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
+                    <a
+                      href="/"
+                      className="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                    >
+                      Home
+                    </a>
+                    <a
+                      href="#"
+                      className="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                    >
+                      Locations
+                    </a>
+                  </div>
+                )}
               </div>
               <div className="hidden sm:ml-6 sm:flex sm:items-center">
-                <SignInButton />
+                {!auth.currentUser && <SignInButton />}
+                {auth.currentUser && (
+                  <Avatar className="mr-6">
+                    <AvatarImage
+                      src={auth.currentUser.photoURL}
+                      alt="@shadcn"
+                    />
+                    <AvatarFallback>NA</AvatarFallback>
+                  </Avatar>
+                )}
+                {auth.currentUser && <LogOutButton />}
               </div>
             </div>
           </div>

@@ -1,4 +1,5 @@
 import { CustomNavMenu } from "@/components/custom/CustomNavMenu";
+import GetStartedButton from "@/components/custom/GetStartedButton";
 import NavBar from "@/components/custom/NavBar";
 import React from "react";
 
@@ -17,9 +18,7 @@ const LandingPage = () => {
               Over 320 million books go to waste yearly. Let's change that
               together!
             </p>
-            <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg">
-              Get Started
-            </button>
+            <GetStartedButton />
           </div>
         </section>
 

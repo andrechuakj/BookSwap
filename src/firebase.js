@@ -1,14 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import {
-  VITE_apiKey,
-  VITE_authDomain,
-  VITE_projectId,
-  VITE_storageBucket,
-  VITE_messagingSenderId,
-  VITE_appId,
-  VITE_measurementId,
-} from meta.env;
+import { getAuth } from "firebase/auth";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyDqDll033OZQnBSuagZvVuky6vDVc-XIOQ",
@@ -22,4 +14,5 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+export const auth = getAuth(app);
+export default app;

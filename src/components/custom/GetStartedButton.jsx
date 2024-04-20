@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../../firebase";
 
-const SignInButton = () => {
+const GetStartedButton = () => {
   const handleSignInWithGoogle = async (e) => {
     const provider = await new GoogleAuthProvider();
     return signInWithPopup(auth, provider)
@@ -27,7 +27,9 @@ const SignInButton = () => {
         // ...
       });
   };
-  return <Button onClick={handleSignInWithGoogle}>Sign In</Button>;
+  return <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg" onClick={handleSignInWithGoogle}>
+  Get Started
+</button>;
 };
 
-export default SignInButton;
+export default GetStartedButton;
