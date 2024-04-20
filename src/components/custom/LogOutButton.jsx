@@ -1,11 +1,11 @@
-import React from "react";
+import { useContext} from "react";
 import { Button } from "@/components/ui/button";
-import { auth } from "../../firebase";
-import { signOut } from "firebase/auth";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 const LogOutButton = () => {
+  const { logOut } = useContext(AuthContext);
   const handleSignOut = async () => {
-    return signOut(auth)
+    return logOut()
       .then(() => {
         window.alert("Logged out successfully!");
       })

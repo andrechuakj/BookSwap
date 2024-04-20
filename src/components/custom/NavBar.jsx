@@ -1,19 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import SignInButton from "./SignInButton";
 import LogOutButton from "./LogOutButton";
 import { auth } from "../../firebase";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { AuthContext } from "@/contexts/AuthProvider";
 
 const NavBar = () => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const { user } = useContext(AuthContext);
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
-    });
-
-    return () => unsubscribe();
-  }, []);
   return (
     <>
       <header>
@@ -44,8 +38,8 @@ const NavBar = () => {
                 )}
               </div>
               <div className="hidden sm:ml-6 sm:flex sm:items-center">
-                {!auth.currentUser && <SignInButton />}
-                {auth.currentUser && (
+                {!user && <SignInButton />}
+                {user && (
                   <Avatar className="mr-6">
                     <AvatarImage
                       src={auth.currentUser.photoURL}
@@ -54,7 +48,7 @@ const NavBar = () => {
                     <AvatarFallback>NA</AvatarFallback>
                   </Avatar>
                 )}
-                {auth.currentUser && <LogOutButton />}
+                {user && <LogOutButton />}
               </div>
             </div>
           </div>

@@ -1,4 +1,3 @@
-import { CustomNavMenu } from "@/components/custom/CustomNavMenu";
 import GetStartedButton from "@/components/custom/GetStartedButton";
 import NavBar from "@/components/custom/NavBar";
 import React from "react";
@@ -6,9 +5,8 @@ import React from "react";
 const LandingPage = () => {
   return (
     <>
-      <NavBar />
+
       <div>
-        {/* Hero section */}
         <section className="hero bg-gray-900 text-white py-20">
           <div className="container mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-4">
@@ -22,7 +20,6 @@ const LandingPage = () => {
           </div>
         </section>
 
-        {/* Features section */}
         <section className="bg-gray-100 py-16">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
