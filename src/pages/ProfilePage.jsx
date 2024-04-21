@@ -4,7 +4,7 @@ import { db } from "@/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { auth } from "@/firebase";
 
-const ProfilePage = () => {
+const ProfilePage = ({ update }) => {
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -29,7 +29,7 @@ const ProfilePage = () => {
   }, []);
   return (
     <>
-      <CardList books={books} isLoading={isLoading}/>
+      <CardList books={books} isLoading={isLoading} update={update}/>
     </>
   );
 };

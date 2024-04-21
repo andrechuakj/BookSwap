@@ -16,7 +16,10 @@ const BookCard = ({ handleOpen, book }) => {
         className="cursor-pointer shadow-md hover:shadow-lg transform transition-transform duration-300 ease-in-out"
         onClick={handleOpen}
       >
-        <div className="h-60 w-45 overflow-hidden">
+        <div
+          className="h-60 w-45 overflow-hidden"
+          style={{ filter: book.exchanged ? "grayscale(100%)" : "none" }}
+        >
           <img
             src={book.image || defaultImg}
             alt="No image available"

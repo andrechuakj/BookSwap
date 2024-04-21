@@ -3,7 +3,7 @@ import BookCard from "./BookCard";
 import CardDialog from "./CardDialog";
 import CardSkeleton from "./CardSkeleton";
 
-const CardList = ({ books, isLoading }) => {
+const CardList = ({ books, isLoading, update }) => {
   const [open, setOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState({});
   const handleOpen = (book) => {
@@ -16,7 +16,7 @@ const CardList = ({ books, isLoading }) => {
   };
   return (
     <>
-      <CardDialog open={open} handleClose={handleClose} book={selectedBook} />
+      <CardDialog open={open} handleClose={handleClose} book={selectedBook} update={update}/>
       <div className="flex justify-center mt-6">
         <div className="grid grid-cols-5 gap-4">
           {isLoading &&

@@ -58,7 +58,7 @@ const NavBar = ({ update }) => {
                           : menustyle.inactive
                       }
                     >
-                      Locations
+                      BookSwap shelves near you
                     </a>
                   </div>
                 )}

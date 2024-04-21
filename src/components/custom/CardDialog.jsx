@@ -7,17 +7,28 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { auth } from "@/firebase";
+import { UserRound } from "lucide-react";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "@/firebase";
 
 const defaultImg =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8-_1dfk_DXSabBEiXoeHZxumOfsR6pawfgQ&usqp=CAU";
 
-const CardDialog = ({ open, handleClose, book }) => {
+const CardDialog = ({ open, handleClose, book, update }) => {
   const handleSwapNow = () => {
     console.log("Swap now!");
   };
 
-  const handleSwapped = () => {
-    console.log("Swapped!");
+  const handleSwapped = async () => {
+    const bookDoc = doc(db, "books", book.id);
+    await updateDoc(bookDoc, { exchanged: true })
+      .then(() => {
+        console.log("book.exchange successfully changed to true");
+        update();
+      })
+      .catch((error) => {
+        console.log("book.exchange cannot be changed", error);
+      });
   };
 
   return (
@@ -36,10 +47,16 @@ const CardDialog = ({ open, handleClose, book }) => {
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <span>{book.condition}</span>
+          <div className="overflow-hidden flex items-center">
+            <UserRound size={15} className="mr-1" /> {book.owner}
+          </div>
         </div>
         <DialogFooter>
-          {book.owner === auth.currentUser.displayName && (
+          {book.owner === auth.currentUser.displayName && !book.exchanged && (
             <Button onClick={handleSwapped}>Swapped!</Button>
+          )}
+          {book.owner == auth.currentUser.displayName && book.exchanged && (
+            <Button disabled>Swapped!</Button>
           )}
           {book.owner !== auth.currentUser.displayName && (
             <Button onClick={handleSwapNow}>Swap now!</Button>

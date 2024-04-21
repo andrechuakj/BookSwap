@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import LocationMap from "@/components/custom/LocationMap";
 
 const LocationsPage = () => {
   return (
-    <div>LocationsPage</div>
-  )
-}
+    <>
+      <LocationMap />
+    </>
+  );
+};
 
-export default LocationsPage
+export default LocationsPage;

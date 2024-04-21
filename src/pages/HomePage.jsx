@@ -3,7 +3,7 @@ import CardList from "@/components/custom/CardList";
 import { db } from "@/firebase";
 import { collection, getDocs } from "firebase/firestore";
 
-const HomePage = () => {
+const HomePage = ({ update }) => {
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -25,7 +25,7 @@ const HomePage = () => {
   }, []);
   return (
     <>
-      <CardList books={books} isLoading={isLoading}/>
+      <CardList books={books} isLoading={isLoading} update={update} />
     </>
   );
 };

@@ -32,7 +32,7 @@ function App() {
                 path="/home"
                 element={
                   <PrivateRoute>
-                    <HomePage key={refreshKey} />
+                    <HomePage key={refreshKey} update={update}/>
                   </PrivateRoute>
                 }
               />
@@ -48,7 +48,7 @@ function App() {
                 path="/profile"
                 element={
                   <PrivateRoute>
-                    <ProfilePage />
+                    <ProfilePage key={refreshKey} update={update}/>
                   </PrivateRoute>
                 }
               />
