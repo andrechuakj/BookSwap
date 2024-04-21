@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -18,14 +18,23 @@ import {
 } from "@/components/ui/command";
 import { genres, conditions, locations } from "@/data/dropdowns";
 import { Check, ChevronsUpDown } from "lucide-react";
+import { SearchContext } from "@/contexts/SearchProvider";
 
-const SearchBar = () => {
+const SearchBar = ({}) => {
   const [genreOpen, setGenreOpen] = useState(false);
-  const [genreValue, setGenreValue] = useState("");
   const [conditionOpen, setConditionOpen] = useState(false);
-  const [conditionValue, setConditionValue] = useState("");
   const [locationOpen, setLocationOpen] = useState(false);
-  const [locationValue, setLocationValue] = useState("");
+
+  const {
+    setGenreValue,
+    setConditionValue,
+    setLocationValue,
+    genreValue,
+    conditionValue,
+    locationValue,
+    update,
+    refreshKey,
+  } = useContext(SearchContext);
 
   return (
     <>
@@ -36,7 +45,7 @@ const SearchBar = () => {
           <PopoverTrigger asChild>
             <Button variant="outline">Filter</Button>
           </PopoverTrigger>
-          <PopoverContent className="w-80 z-50 bg-white shadow-lg rounded-lg p-3">
+          <PopoverContent className="w-80 z-30 bg-white shadow-lg rounded-lg p-3">
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-3">
                 <Label htmlFor="genre" className="text-right">
@@ -57,7 +66,7 @@ const SearchBar = () => {
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-[200px] p-0">
+                  <PopoverContent className="w-[200px] z-40 p-0 shadow-lg rounded-lg">
                     <Command>
                       <CommandInput placeholder="Search genre..." />
                       <CommandList>
@@ -74,6 +83,8 @@ const SearchBar = () => {
                                     : currentValue
                                 );
                                 setGenreOpen(false);
+                                update();
+                                console.log(refreshKey);
                               }}
                             >
                               <Check
@@ -114,7 +125,7 @@ const SearchBar = () => {
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-[200px] p-0">
+                  <PopoverContent className="w-[200px] z-40 p-0 shadow-lg rounded-lg">
                     <Command>
                       <CommandList>
                         <CommandGroup>
@@ -129,6 +140,7 @@ const SearchBar = () => {
                                     : currentValue
                                 );
                                 setConditionOpen(false);
+                                update();
                               }}
                             >
                               <Check
@@ -169,7 +181,7 @@ const SearchBar = () => {
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-[200px] p-0">
+                  <PopoverContent className="w-[200px] z-40 p-0 shadow-lg rounded-lg">
                     <Command>
                       <CommandList>
                         <CommandGroup>
@@ -184,6 +196,7 @@ const SearchBar = () => {
                                     : currentValue
                                 );
                                 setLocationOpen(false);
+                                update();
                               }}
                             >
                               <Check
@@ -204,10 +217,8 @@ const SearchBar = () => {
                 </Popover>
               </div>
             </div>
-            <Button>Filter</Button>
           </PopoverContent>
         </Popover>
-        
       </div>
     </>
   );

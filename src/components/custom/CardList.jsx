@@ -1,11 +1,39 @@
-import { useState } from "react";
 import BookCard from "./BookCard";
 import CardDialog from "./CardDialog";
 import CardSkeleton from "./CardSkeleton";
+import { useState, useEffect, useContext } from "react";
+import { db } from "@/firebase";
+import { collection, getDocs } from "firebase/firestore";
+import { SearchContext } from "@/contexts/SearchProvider";
 
-const CardList = ({ books, isLoading, update }) => {
+const CardList = ({ update }) => {
   const [open, setOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState({});
+  const [books, setBooks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const { filterByGenre, filterByCondition, filterByLocation, refreshKey } =
+    useContext(SearchContext);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const snapshot = await getDocs(collection(db, "books"));
+        const items = snapshot.docs
+          .map((doc) => doc.data())
+          .filter((book) => !book.exchanged)
+          .filter(filterByGenre)
+          .filter(filterByCondition)
+          .filter(filterByLocation)
+          .sort((x, y) => Date.parse(y.createdAt) - Date.parse(x.createdAt));
+        setIsLoading(false);
+        setBooks(items);
+      } catch (error) {
+        console.error("Error fetching data from Firebase: ", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   const handleOpen = (book) => {
     setOpen(true);
     setSelectedBook(book);

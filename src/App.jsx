@@ -15,6 +15,7 @@ import LocationsPage from "./pages/LocationsPage";
 import ProfilePage from "./pages/ProfilePage";
 import MessagesPage from "./pages/MessagesPage";
 import ChatProvider from "./contexts/ChatProvider";
+import SearchProvider from "./contexts/SearchProvider";
 
 function App() {
   const [refreshKey, setRefreshKey] = useState(0);
@@ -26,43 +27,45 @@ function App() {
       <Router>
         <AuthProvider>
           <ChatProvider>
-            <NavBar update={update} />
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route
-                path="/home"
-                element={
-                  <PrivateRoute>
-                    <HomePage key={refreshKey} update={update} />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="/locations"
-                element={
-                  <PrivateRoute>
-                    <LocationsPage />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="/profile"
-                element={
-                  <PrivateRoute>
-                    <ProfilePage key={refreshKey} update={update} />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="/messages"
-                element={
-                  <PrivateRoute>
-                    <MessagesPage />
-                  </PrivateRoute>
-                }
-              />
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
+            <SearchProvider>
+              <NavBar update={update} />
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route
+                  path="/home"
+                  element={
+                    <PrivateRoute>
+                      <HomePage key={refreshKey} update={update} />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/locations"
+                  element={
+                    <PrivateRoute>
+                      <LocationsPage />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/profile"
+                  element={
+                    <PrivateRoute>
+                      <ProfilePage key={refreshKey} update={update} />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/messages"
+                  element={
+                    <PrivateRoute>
+                      <MessagesPage />
+                    </PrivateRoute>
+                  }
+                />
+                <Route path="*" element={<Navigate to="/" />} />
+              </Routes>
+            </SearchProvider>
           </ChatProvider>
         </AuthProvider>
       </Router>
