@@ -1,11 +1,9 @@
-import { useState } from "react";
 import {
   Card,
   CardContent,
   CardDescription,
   CardTitle,
 } from "@/components/ui/card";
-
 import { UserRound } from "lucide-react";
 
 const defaultImg =

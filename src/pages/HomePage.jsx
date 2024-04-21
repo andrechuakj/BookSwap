@@ -5,6 +5,7 @@ import { collection, getDocs } from "firebase/firestore";
 
 const HomePage = () => {
   const [books, setBooks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -14,6 +15,7 @@ const HomePage = () => {
           .map((doc) => doc.data())
           .filter((book) => !book.exchanged)
           .sort((x, y) => Date.parse(y.createdAt) - Date.parse(x.createdAt));
+        setIsLoading(false);
         setBooks(items);
       } catch (error) {
         console.error("Error fetching data from Firebase: ", error);
@@ -23,7 +25,7 @@ const HomePage = () => {
   }, []);
   return (
     <>
-      <CardList books={books} />
+      <CardList books={books} isLoading={isLoading}/>
     </>
   );
 };

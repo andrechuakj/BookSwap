@@ -6,6 +6,7 @@ import { auth } from "@/firebase";
 
 const ProfilePage = () => {
   const [books, setBooks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,6 +19,7 @@ const ProfilePage = () => {
           .sort((x, y) =>
             x.exchanged === y.exchanged ? 0 : x.exchanged ? 1 : -1
           );
+        setIsLoading(false);
         setBooks(items);
       } catch (error) {
         console.error("Error fetching data from Firebase: ", error);
@@ -27,7 +29,7 @@ const ProfilePage = () => {
   }, []);
   return (
     <>
-      <CardList books={books} />
+      <CardList books={books} isLoading={isLoading}/>
     </>
   );
 };
