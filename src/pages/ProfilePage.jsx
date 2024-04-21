@@ -29,7 +29,12 @@ const ProfilePage = ({ update }) => {
   }, []);
   return (
     <>
-      <CardList books={books} isLoading={isLoading} update={update}/>
+      <CardList
+        books={books}
+        isLoading={isLoading}
+        update={update}
+        page="/profile"
+      />
     </>
   );
 };

@@ -8,7 +8,7 @@ const HomePage = ({ update }) => {
   return (
     <>
       <SearchBar />
-      <CardList update={update} key={refreshKey} />
+      <CardList update={update} key={refreshKey} page="/home" />
     </>
   );
 };

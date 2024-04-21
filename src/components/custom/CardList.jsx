@@ -6,7 +6,7 @@ import { db } from "@/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { SearchContext } from "@/contexts/SearchProvider";
 
-const CardList = ({ update }) => {
+const CardList = ({ update, page }) => {
   const [open, setOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState({});
   const [books, setBooks] = useState([]);
@@ -18,18 +18,35 @@ const CardList = ({ update }) => {
     filterBySearchKey,
   } = useContext(SearchContext);
 
+  const filterSwapped = (book) => {
+    if (page == "/home") {
+      return !book.exchanged;
+    } else {
+      return true;
+    }
+  };
+
+  const sortSwapped = (x, y) => {
+    if (page == "/profile") {
+      return x.exchanged === y.exchanged ? 0 : x.exchanged ? 1 : -1;
+    } else {
+      return 0;
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const snapshot = await getDocs(collection(db, "books"));
         const items = snapshot.docs
           .map((doc) => doc.data())
-          .filter((book) => !book.exchanged)
+          .filter(filterSwapped)
           .filter(filterBySearchKey)
           .filter(filterByGenre)
           .filter(filterByCondition)
           .filter(filterByLocation)
-          .sort((x, y) => Date.parse(y.createdAt) - Date.parse(x.createdAt));
+          .sort((x, y) => Date.parse(y.createdAt) - Date.parse(x.createdAt))
+          .sort(sortSwapped);
         setIsLoading(false);
         setBooks(items);
       } catch (error) {
@@ -39,7 +56,6 @@ const CardList = ({ update }) => {
 
     fetchData();
   }, []);
-
 
   const handleOpen = (book) => {
     setOpen(true);
