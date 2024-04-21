@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -14,19 +15,23 @@ import LocationsPage from "./pages/LocationsPage";
 import NavigationProvider from "./contexts/NavigationProvider";
 
 function App() {
+  const [refreshKey, setRefreshKey] = useState(0);
+  const update = () => {
+    setRefreshKey((prevKey) => prevKey + 1);
+  };
   return (
     <>
       <Router>
         <NavigationProvider>
           <AuthProvider>
-            <NavBar />
+            <NavBar update={update} />
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route
                 path="/home"
                 element={
                   <PrivateRoute>
-                    <HomePage />
+                    <HomePage key={refreshKey} />
                   </PrivateRoute>
                 }
               />

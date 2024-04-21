@@ -2,27 +2,31 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 
-const image = "https://source.unsplash.com/1600x900/?book";
-const another =
-  "https://plus.unsplash.com/premium_photo-1681977755496-205f938f7ade?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHx8";
+const defaultImg =
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8-_1dfk_DXSabBEiXoeHZxumOfsR6pawfgQ&usqp=CAU";
 
-const CardDialog = ({open, handleClose}) => {
+const CardDialog = ({ open, handleClose, book }) => {
   return (
     <Dialog open={open}>
-      <DialogContent className="sm:max-w-[425px]" onPointerDownOutside={handleClose} onInteractOutside={handleClose}>
-        <img src={another} className="h-60 w-full object-cover" />
+      <DialogContent
+        className="sm:max-w-[425px]"
+        onPointerDownOutside={handleClose}
+        onInteractOutside={handleClose}
+      >
+        <img
+          src={book.image || defaultImg}
+          className="h-60 w-full object-cover"
+        />
         <DialogHeader>
-          <DialogTitle>Book name</DialogTitle>
+          <DialogTitle>{book.name}</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <span>Brand New</span>
+          <span>{book.condition}</span>
         </div>
         <DialogFooter>
           <Button type="submit">Swap now</Button>

@@ -6,9 +6,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-const defaultImg = "https://source.unsplash.com/1600x900/?book";
+import { UserRound } from "lucide-react";
 
-const BookCard = ({ handleOpen }) => {
+const defaultImg =
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8-_1dfk_DXSabBEiXoeHZxumOfsR6pawfgQ&usqp=CAU";
+
+const BookCard = ({ handleOpen, book }) => {
   return (
     <>
       <Card
@@ -16,12 +19,19 @@ const BookCard = ({ handleOpen }) => {
         onClick={handleOpen}
       >
         <div className="h-60 w-45 overflow-hidden">
-          <img src={defaultImg} className="h-full w-full object-cover" />
+          <img
+            src={book.image || defaultImg}
+            alt="No image available"
+            className="h-full w-full object-cover"
+          />
         </div>
         <CardContent className="text-left mt-4 pb-4">
-          <CardTitle className="truncate">Card title</CardTitle>
+          <CardTitle className="truncate text-xl">{book.name}</CardTitle>
           <CardDescription className="overflow-hidden">
-            Card desc
+            {book.condition}
+          </CardDescription>
+          <CardDescription className="overflow-hidden flex items-center">
+            <UserRound size={15} className="mr-1" /> {book.owner}
           </CardDescription>
         </CardContent>
       </Card>

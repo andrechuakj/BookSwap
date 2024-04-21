@@ -7,7 +7,7 @@ import { ProfileDropDown } from "@/components/custom/ProfileDropDown";
 import { useLocation } from "react-router-dom";
 import AddBook from "@/components/custom/AddBook";
 
-const NavBar = () => {
+const NavBar = ({update}) => {
   const { user } = useContext(AuthContext);
   const location = useLocation().pathname;
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -69,7 +69,7 @@ const NavBar = () => {
                   <>
                     <MessageCircle className="cursor-pointer" size={33} absoluteStrokeWidth={true} />
                     <ProfileDropDown />
-                    <AddBook open={dialogOpen} handleClose={handleDialogClose} handleOpen={handleDialogOpen}/>
+                    <AddBook open={dialogOpen} handleClose={handleDialogClose} handleOpen={handleDialogOpen} update={update}/>
                   </>
                 )}
               </div>

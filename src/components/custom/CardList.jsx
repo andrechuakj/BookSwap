@@ -1,28 +1,30 @@
-import {useState} from "react";
+import { useState, useContext } from "react";
 import BookCard from "./BookCard";
 import CardDialog from "./CardDialog";
 
-const CardList = () => {
-    const [open, setOpen] = useState(false);
+const CardList = ({ books }) => {
+  const [open, setOpen] = useState(false);
+  const [selectedBook, setSelectedBook] = useState({});
+  const handleOpen = (book) => {
+    setOpen(true);
+    setSelectedBook(book);
+  };
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    }
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <>
-      <CardDialog open={open} handleClose={handleClose}/>
+      <CardDialog open={open} handleClose={handleClose} book={selectedBook} />
       <div className="flex justify-center mt-6">
         <div className="grid grid-cols-5 gap-4">
-          <BookCard handleOpen={handleOpen}/>
-          <BookCard handleOpen={handleOpen}/>
-          <BookCard handleOpen={handleOpen}/>
-          <BookCard handleOpen={handleOpen}/>
-          <BookCard handleOpen={handleOpen}/>
-          <BookCard handleOpen={handleOpen}/>
+          {books.map((book, index) => (
+            <BookCard
+              key={index}
+              handleOpen={() => handleOpen(book)}
+              book={book}
+            />
+          ))}
         </div>
       </div>
     </>
