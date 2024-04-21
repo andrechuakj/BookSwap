@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -27,6 +27,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import genres from "@/data/genres";
+import { collection, addDoc, onSnapshot, updateDoc } from "firebase/firestore";
+import { db, storage } from "@/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { auth } from "@/firebase";
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
 
 const conditions = [
   {
@@ -43,24 +49,68 @@ const conditions = [
   },
 ];
 
-const AddBook = () => {
+const AddBook = ({ open, handleClose, handleOpen }) => {
   const [genreOpen, setGenreOpen] = useState(false);
   const [genreValue, setGenreValue] = useState("");
   const [conditionOpen, setConditionOpen] = useState(false);
   const [conditionValue, setConditionValue] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [fileUrl, setFileUrl] = useState(null);
+  const bookNameRef = useRef(null);
+  const { toast } = useToast();
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setSelectedFile(file);
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const storageRef = ref(storage, file.name);
+
+      try {
+        // Upload file to Firebase Storage
+        await uploadBytes(storageRef, file);
+
+        // Get the download URL of the uploaded file
+        const downloadURL = await getDownloadURL(storageRef);
+        setFileUrl(downloadURL);
+      } catch (error) {
+        console.error("Error uploading file:", error);
+      }
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    const book = {
+      name: bookNameRef.current.value,
+      genre: genreValue,
+      condition: conditionValue,
+      image: fileUrl,
+      owner: auth.currentUser.displayName,
+    };
+    try {
+      const docRef = await addDoc(collection(db, "books"), book);
+      updateDoc(docRef, { id: docRef.id });
+      console.log("Document written with ID:", docRef.id);
+      toast({
+        title: bookNameRef.current.value + "added successfully",
+      });
+      handleClose();
+    } catch (error) {
+      console.error("Error adding document:", error);
+    }
   };
 
   return (
-    <Dialog>
+    <Dialog open={open}>
       <DialogTrigger asChild>
-        <Button variant="outline">List your book</Button>
+        <Button variant="outline" onClick={handleOpen}>
+          List your book
+        </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent
+        className="sm:max-w-[425px]"
+        onPointerDownOutside={handleClose}
+        onInteractOutside={handleClose}
+        onEscapeKeyDown={handleClose}
+      >
         <DialogHeader>
           <DialogTitle>List your book</DialogTitle>
           <DialogDescription>
@@ -72,7 +122,12 @@ const AddBook = () => {
             <Label htmlFor="name" className="text-right">
               Book Name
             </Label>
-            <Input id="name" defaultValue="" className="col-span-3" />
+            <Input
+              id="name"
+              defaultValue=""
+              className="col-span-3"
+              ref={bookNameRef}
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="genre" className="text-right">
@@ -197,7 +252,9 @@ const AddBook = () => {
         </div>
 
         <DialogFooter>
-          <Button type="submit">Add</Button>
+          <Button type="submit" onClick={handleSubmit}>
+            Add
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

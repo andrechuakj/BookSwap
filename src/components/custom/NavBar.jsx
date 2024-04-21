@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import SignInButton from "./SignInButton";
 import { auth } from "../../firebase";
 import { AuthContext } from "@/contexts/AuthProvider";
@@ -10,12 +10,20 @@ import AddBook from "@/components/custom/AddBook";
 const NavBar = () => {
   const { user } = useContext(AuthContext);
   const location = useLocation().pathname;
-  console.log(location.pathname);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const menustyle = {
     active:
       "border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium",
     inactive:
       "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium",
+  };
+
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
   };
 
   return (
@@ -35,7 +43,9 @@ const NavBar = () => {
                     <a
                       href="/home"
                       className={
-                        location === "/home" ? menustyle.active : menustyle.inactive
+                        location === "/home"
+                          ? menustyle.active
+                          : menustyle.inactive
                       }
                     >
                       Home
@@ -57,9 +67,9 @@ const NavBar = () => {
                 {!user && <SignInButton />}
                 {user && (
                   <>
-                    <MessageCircle size={33} absoluteStrokeWidth={true} />
+                    <MessageCircle className="cursor-pointer" size={33} absoluteStrokeWidth={true} />
                     <ProfileDropDown />
-                    <AddBook />
+                    <AddBook open={dialogOpen} handleClose={handleDialogClose} handleOpen={handleDialogOpen}/>
                   </>
                 )}
               </div>

@@ -18,7 +18,7 @@ export function ProfileDropDown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Avatar className="ml-5 mr-6">
+        <Avatar className="ml-5 mr-6 cursor-pointer">
           <AvatarImage
             src={auth.currentUser.photoURL}
             alt={auth.currentUser.displayName}

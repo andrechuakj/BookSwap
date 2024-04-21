@@ -1,46 +1,55 @@
 const genres = [
   {
-    value: "action",
+    value: "Action",
     label: "Action",
   },
   {
-    value: "adventure",
+    value: "Adventure",
     label: "Adventure",
   },
   {
-    value: "comedy",
+    value: "Comedy",
     label: "Comedy",
   },
   {
-    value: "drama",
+    value: "Drama",
     label: "Drama",
   },
   {
-    value: "fantasy",
+    value: "Fantasy",
     label: "Fantasy",
   },
   {
-    value: "horror",
+    value: "Fiction",
+    label: "Fiction",
+  },
+  {
+    value: "Horror",
     label: "Horror",
   },
   {
-    value: "mystery",
+    value: "Mystery",
     label: "Mystery",
   },
   {
-    value: "romance",
+    value: "Non-Fiction",
+    label: "Non-Fiction",
+  },
+
+  {
+    value: "Romance",
     label: "Romance",
   },
   {
-    value: "sci-fi",
+    value: "Science Fiction",
     label: "Science Fiction",
   },
   {
-    value: "thriller",
+    value: "Thriller",
     label: "Thriller",
   },
   {
-    value: "western",
+    value: "Western",
     label: "Western",
   },
 ];
