@@ -90,6 +90,7 @@ const AddBook = ({ open, handleClose, handleOpen, update }) => {
       condition: conditionValue,
       image: fileUrl,
       owner: auth.currentUser.displayName,
+      uid: auth.currentUser.uid,
       createdAt: new Date().toISOString(),
       exchanged: false,
     };

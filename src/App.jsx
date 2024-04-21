@@ -12,9 +12,9 @@ import AuthProvider from "./contexts/AuthProvider";
 import NavBar from "./components/custom/NavBar";
 import PrivateRoute from "./routes/PrivateRoute";
 import LocationsPage from "./pages/LocationsPage";
-import NavigationProvider from "./contexts/NavigationProvider";
 import ProfilePage from "./pages/ProfilePage";
 import MessagesPage from "./pages/MessagesPage";
+import ChatProvider from "./contexts/ChatProvider";
 
 function App() {
   const [refreshKey, setRefreshKey] = useState(0);
@@ -24,8 +24,8 @@ function App() {
   return (
     <>
       <Router>
-        <NavigationProvider>
-          <AuthProvider>
+        <AuthProvider>
+          <ChatProvider>
             <NavBar update={update} />
             <Routes>
               <Route path="/" element={<LandingPage />} />
@@ -63,8 +63,8 @@ function App() {
               />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
-          </AuthProvider>
-        </NavigationProvider>
+          </ChatProvider>
+        </AuthProvider>
       </Router>
     </>
   );

@@ -14,7 +14,7 @@ const ProfilePage = ({ update }) => {
         const snapshot = await getDocs(collection(db, "books"));
         const items = snapshot.docs
           .map((doc) => doc.data())
-          .filter((book) => book.owner === auth.currentUser.displayName)
+          .filter((book) => book.uid === auth.currentUser.uid)
           .sort((x, y) => Date.parse(y.createdAt) - Date.parse(x.createdAt))
           .sort((x, y) =>
             x.exchanged === y.exchanged ? 0 : x.exchanged ? 1 : -1
