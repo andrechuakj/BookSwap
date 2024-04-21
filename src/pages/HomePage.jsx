@@ -1,9 +1,12 @@
-import React from 'react'
+import CardList from "@/components/custom/CardList";
+import React from "react";
 
 const HomePage = () => {
   return (
-    <div>HomePage</div>
-  )
-}
+    <>
+      <CardList />
+    </>
+  );
+};
 
-export default HomePage
+export default HomePage;

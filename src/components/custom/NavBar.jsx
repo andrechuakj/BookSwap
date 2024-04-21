@@ -5,6 +5,7 @@ import { AuthContext } from "@/contexts/AuthProvider";
 import { MessageCircle } from "lucide-react";
 import { ProfileDropDown } from "@/components/custom/ProfileDropDown";
 import { useLocation } from "react-router-dom";
+import AddBook from "@/components/custom/AddBook";
 
 const NavBar = () => {
   const { user } = useContext(AuthContext);
@@ -58,6 +59,7 @@ const NavBar = () => {
                   <>
                     <MessageCircle size={33} absoluteStrokeWidth={true} />
                     <ProfileDropDown />
+                    <AddBook />
                   </>
                 )}
               </div>
