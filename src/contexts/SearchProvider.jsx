@@ -7,6 +7,7 @@ const SearchProvider = ({ children }) => {
   const [conditionValue, setConditionValue] = useState("");
   const [locationValue, setLocationValue] = useState("");
   const [refreshKey, setRefreshKey] = useState(0);
+  const [searchKey, setSearchKey] = useState("");
 
   const update = () => {
     setRefreshKey((prevKey) => prevKey + 1);
@@ -24,18 +25,36 @@ const SearchProvider = ({ children }) => {
     return locationValue ? book.location === locationValue : true;
   };
 
+  const filterBySearchKey = (book) => {
+    return searchKey
+      ? book.name.toLowerCase().includes(searchKey.toLowerCase())
+      : true;
+  };
+
+  const reset = () => {
+    setGenreValue("");
+    setConditionValue("");
+    setLocationValue("");
+    setSearchKey("");
+    update();
+  };
+
   const values = {
     genreValue,
     conditionValue,
     locationValue,
-    update,
     refreshKey,
+    searchKey,
+    update,
     setGenreValue,
     setConditionValue,
     setLocationValue,
+    setSearchKey,
     filterByGenre,
     filterByCondition,
     filterByLocation,
+    filterBySearchKey,
+    reset,
   };
 
   return (

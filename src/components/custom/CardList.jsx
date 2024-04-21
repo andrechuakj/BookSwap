@@ -11,8 +11,12 @@ const CardList = ({ update }) => {
   const [selectedBook, setSelectedBook] = useState({});
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { filterByGenre, filterByCondition, filterByLocation, refreshKey } =
-    useContext(SearchContext);
+  const {
+    filterByGenre,
+    filterByCondition,
+    filterByLocation,
+    filterBySearchKey,
+  } = useContext(SearchContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,6 +25,7 @@ const CardList = ({ update }) => {
         const items = snapshot.docs
           .map((doc) => doc.data())
           .filter((book) => !book.exchanged)
+          .filter(filterBySearchKey)
           .filter(filterByGenre)
           .filter(filterByCondition)
           .filter(filterByLocation)
@@ -31,8 +36,10 @@ const CardList = ({ update }) => {
         console.error("Error fetching data from Firebase: ", error);
       }
     };
+
     fetchData();
   }, []);
+
 
   const handleOpen = (book) => {
     setOpen(true);

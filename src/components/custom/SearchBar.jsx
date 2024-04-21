@@ -34,12 +34,25 @@ const SearchBar = ({}) => {
     locationValue,
     update,
     refreshKey,
+    searchKey,
+    setSearchKey,
   } = useContext(SearchContext);
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    setSearchKey(value);
+    update();
+  };
 
   return (
     <>
       <div className="flex w-full items-center space-x-2 mt-3">
-        <Input type="text" placeholder="Search for a book..." />
+        <Input
+          type="text"
+          placeholder="Search for a book..."
+          value={searchKey}
+          onChange={handleInputChange}
+        />
         <Button type="submit">Search</Button>
         <Popover>
           <PopoverTrigger asChild>
@@ -84,7 +97,6 @@ const SearchBar = ({}) => {
                                 );
                                 setGenreOpen(false);
                                 update();
-                                console.log(refreshKey);
                               }}
                             >
                               <Check

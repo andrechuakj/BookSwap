@@ -3,6 +3,7 @@ import { auth } from "../../firebase";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import { SearchContext } from "@/contexts/SearchProvider";
 
 import {
   DropdownMenu,
@@ -13,7 +14,13 @@ import {
 
 export function ProfileDropDown() {
   const { logOut } = useContext(AuthContext);
+  const { reset } = useContext(SearchContext);
   const navigateTo = useNavigate();
+
+  const handleProfileClick = () => {
+    reset();
+    navigateTo("/profile");
+  };
   const handleSignOut = async () => {
     return logOut();
   };
@@ -30,7 +37,7 @@ export function ProfileDropDown() {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuItem onClick={() => navigateTo("/profile")}>
+        <DropdownMenuItem onClick={handleProfileClick}>
           <a>Personal Listings</a>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handleSignOut}>
