@@ -16,22 +16,36 @@ const CardList = ({ books, isLoading, update }) => {
   };
   return (
     <>
-      <CardDialog open={open} handleClose={handleClose} book={selectedBook} update={update}/>
-      <div className="flex justify-center mt-6">
-        <div className="grid grid-cols-5 gap-4">
-          {isLoading &&
-            new Array(8)
-              .fill(0)
-              .map((item, index) => <CardSkeleton key={index} />)}
-          {books.map((book, index) => (
-            <BookCard
-              key={index}
-              handleOpen={() => handleOpen(book)}
-              book={book}
-            />
-          ))}
+      {books.length != 0 && (
+        <>
+          <CardDialog
+            open={open}
+            handleClose={handleClose}
+            book={selectedBook}
+            update={update}
+          />
+          <div className="flex justify-center mt-6">
+            <div className="grid grid-cols-5 gap-4">
+              {isLoading &&
+                new Array(8)
+                  .fill(0)
+                  .map((item, index) => <CardSkeleton key={index} />)}
+              {books.map((book, index) => (
+                <BookCard
+                  key={index}
+                  handleOpen={() => handleOpen(book)}
+                  book={book}
+                />
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+      {books.length == 0 && (
+        <div className="flex justify-center mt-6">
+          <p className="text-2xl text-gray-400">No books found</p>
         </div>
-      </div>
+      )}
     </>
   );
 };

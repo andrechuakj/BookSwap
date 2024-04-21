@@ -26,7 +26,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import genres from "@/data/genres";
+import { genres, conditions, locations } from "@/data/dropdowns";
 import { collection, addDoc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db, storage } from "@/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -34,26 +34,13 @@ import { auth } from "@/firebase";
 import { useToast } from "@/components/ui/use-toast";
 import { Toaster } from "../ui/toaster";
 
-const conditions = [
-  {
-    value: "Brand New",
-    label: "Brand New",
-  },
-  {
-    value: "Like New",
-    label: "Like New",
-  },
-  {
-    value: "Well Used",
-    label: "Well Used",
-  },
-];
-
 const AddBook = ({ open, handleClose, handleOpen, update }) => {
   const [genreOpen, setGenreOpen] = useState(false);
   const [genreValue, setGenreValue] = useState("");
   const [conditionOpen, setConditionOpen] = useState(false);
   const [conditionValue, setConditionValue] = useState("");
+  const [locationOpen, setLocationOpen] = useState(false);
+  const [locationValue, setLocationValue] = useState("");
   const [fileUrl, setFileUrl] = useState(null);
   const bookNameRef = useRef(null);
   const { toast } = useToast();
@@ -93,11 +80,11 @@ const AddBook = ({ open, handleClose, handleOpen, update }) => {
       uid: auth.currentUser.uid,
       createdAt: new Date().toISOString(),
       exchanged: false,
+      location: locationValue,
     };
     try {
       const docRef = await addDoc(collection(db, "books"), book);
       updateDoc(docRef, { id: docRef.id });
-      console.log("Document written with ID:", docRef.id);
       handleClose();
       update();
       return toast({
@@ -150,7 +137,7 @@ const AddBook = ({ open, handleClose, handleOpen, update }) => {
                     variant="outline"
                     role="combobox"
                     aria-expanded={genreOpen}
-                    className="w-[200px] justify-between"
+                    className="col-span-3 justify-between"
                   >
                     {genreValue
                       ? genres.find((genre) => genre.value === genreValue)
@@ -204,7 +191,7 @@ const AddBook = ({ open, handleClose, handleOpen, update }) => {
                     variant="outline"
                     role="combobox"
                     aria-expanded={conditionOpen}
-                    className="w-[200px] justify-between"
+                    className="col-span-3 justify-between"
                   >
                     {conditionValue
                       ? conditions.find(
@@ -248,18 +235,73 @@ const AddBook = ({ open, handleClose, handleOpen, update }) => {
                 </PopoverContent>
               </Popover>
             </div>
+
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="location" className="text-right">
+                Location
+              </Label>
+              <Popover open={locationOpen} onOpenChange={setLocationOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={locationOpen}
+                    className="col-span-3 justify-between"
+                  >
+                    {locationValue
+                      ? locations.find(
+                          (location) => location.value === locationValue
+                        )?.label
+                      : "Select location..."}
+                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-[200px] p-0">
+                  <Command>
+                    <CommandList>
+                      <CommandGroup>
+                        {locations.map((location) => (
+                          <CommandItem
+                            key={location.value}
+                            value={location.value}
+                            onSelect={(currentValue) => {
+                              setLocationValue(
+                                currentValue === locationValue
+                                  ? ""
+                                  : currentValue
+                              );
+                              setLocationOpen(false);
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 h-4 w-4",
+                                locationValue === location.value
+                                  ? "opacity-100"
+                                  : "opacity-0"
+                              )}
+                            />
+                            {location.label}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+            </div>
+
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="image" className="text-right">
                 Upload image
               </Label>
-              <label>
-                <input
-                  type="file"
-                  id="image"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                />
-              </label>
+              <Input
+                type="file"
+                id="image"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="col-span-3"
+              />
             </div>
           </div>
 

@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { auth } from "@/firebase";
-import { UserRound } from "lucide-react";
+import { UserRound, MapPin, BookOpen } from "lucide-react";
 import {
   doc,
   getDoc,
@@ -19,6 +19,7 @@ import {
 import { db } from "@/firebase";
 import { ChatContext } from "@/contexts/ChatProvider";
 import { useNavigate } from "react-router-dom";
+import { DialogDescription } from "@radix-ui/react-dialog";
 
 const defaultImg =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8-_1dfk_DXSabBEiXoeHZxumOfsR6pawfgQ&usqp=CAU";
@@ -81,7 +82,7 @@ const CardDialog = ({ open, handleClose, book, update }) => {
             : otherUser.uid + currentUser.uid;
         try {
           const chatsRes = await getDoc(doc(db, "chats", combinedId));
-          console.log(chatsRes.exists());
+          chatsRes.exists();
           if (!chatsRes.exists()) {
             // Create the chat document
             await setDoc(doc(db, "chats", combinedId), { messages: [] });
@@ -120,7 +121,6 @@ const CardDialog = ({ open, handleClose, book, update }) => {
               },
             });
           }
-          
         } catch (err) {
           console.log(err);
         }
@@ -150,11 +150,18 @@ const CardDialog = ({ open, handleClose, book, update }) => {
         />
         <DialogHeader>
           <DialogTitle>{book.name}</DialogTitle>
+          <DialogDescription>{book.condition}</DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <span>{book.condition}</span>
+        <div className="grid gap-1">
+          <div className="overflow-hidden flex items-center">
+            <BookOpen size={15} className="mr-1" />
+            {book.genre}
+          </div>
           <div className="overflow-hidden flex items-center">
             <UserRound size={15} className="mr-1" /> {book.owner}
+          </div>
+          <div className="overflow-hidden flex items-center">
+            <MapPin size={15} className="mr-1" /> {book.location}
           </div>
         </div>
         <DialogFooter>

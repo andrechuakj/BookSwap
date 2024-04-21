@@ -4,7 +4,7 @@ import {
   CardDescription,
   CardTitle,
 } from "@/components/ui/card";
-import { UserRound } from "lucide-react";
+import { UserRound, MapPin } from "lucide-react";
 
 const defaultImg =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8-_1dfk_DXSabBEiXoeHZxumOfsR6pawfgQ&usqp=CAU";
@@ -33,6 +33,9 @@ const BookCard = ({ handleOpen, book }) => {
           </CardDescription>
           <CardDescription className="overflow-hidden flex items-center">
             <UserRound size={15} className="mr-1" /> {book.owner}
+          </CardDescription>
+          <CardDescription className="overflow-hidden flex items-center">
+            <MapPin size={15} className="mr-1" /> {book.location}
           </CardDescription>
         </CardContent>
       </Card>

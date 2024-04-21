@@ -29,11 +29,8 @@ const AuthProvider = ({ children }) => {
       // Check if the user's chat document exists
       const chatDoc = await getDoc(chatRef);
       const userDoc = await getDoc(userRef);
-      console.log(chatDoc.exists())
-      console.log(userDoc.exists())
       if (!chatDoc.exists()) {
         await setDoc(chatRef, {});
-        console.log("Chat ref created");
       }
 
       // Check if the user's profile document exists
@@ -44,7 +41,6 @@ const AuthProvider = ({ children }) => {
           photoURL: resUser.photoURL,
           uid: resUser.uid,
         });
-        console.log("User ref created");
       }
 
       navigateTo("/home");

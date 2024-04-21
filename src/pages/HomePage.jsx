@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import CardList from "@/components/custom/CardList";
 import { db } from "@/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import CardList from "@/components/custom/CardList";
+import SearchBar from "@/components/custom/SearchBar";
 
 const HomePage = ({ update }) => {
   const [books, setBooks] = useState([]);
@@ -25,6 +26,7 @@ const HomePage = ({ update }) => {
   }, []);
   return (
     <>
+      <SearchBar />
       <CardList books={books} isLoading={isLoading} update={update} />
     </>
   );

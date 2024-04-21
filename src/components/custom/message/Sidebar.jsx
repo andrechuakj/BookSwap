@@ -12,7 +12,6 @@ const Sidebar = () => {
     const getChats = () => {
       const unsub = onSnapshot(doc(db, "userChats", user.uid), async (doc) => {
         const data = await doc.data();
-        console.log(data);
         setChats(data);
       });
 

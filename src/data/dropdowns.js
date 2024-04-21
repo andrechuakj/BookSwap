@@ -1,4 +1,4 @@
-const genres = [
+export const genres = [
   {
     value: "Action",
     label: "Action",
@@ -54,4 +54,40 @@ const genres = [
   },
 ];
 
-export default genres;
+export const conditions = [
+  {
+    value: "Brand New",
+    label: "Brand New",
+  },
+  {
+    value: "Like New",
+    label: "Like New",
+  },
+  {
+    value: "Well Used",
+    label: "Well Used",
+  },
+];
+
+export const locations = [
+  {
+    value: "North",
+    label: "North",
+  },
+  {
+    value: "South",
+    label: "South",
+  },
+  {
+    value: "East",
+    label: "East",
+  },
+  {
+    value: "West",
+    label: "West",
+  },
+  {
+    value: "Central",
+    label: "Central",
+  },
+];
