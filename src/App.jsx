@@ -14,6 +14,7 @@ import PrivateRoute from "./routes/PrivateRoute";
 import LocationsPage from "./pages/LocationsPage";
 import NavigationProvider from "./contexts/NavigationProvider";
 import ProfilePage from "./pages/ProfilePage";
+import MessagesPage from "./pages/MessagesPage";
 
 function App() {
   const [refreshKey, setRefreshKey] = useState(0);
@@ -32,7 +33,7 @@ function App() {
                 path="/home"
                 element={
                   <PrivateRoute>
-                    <HomePage key={refreshKey} update={update}/>
+                    <HomePage key={refreshKey} update={update} />
                   </PrivateRoute>
                 }
               />
@@ -48,7 +49,15 @@ function App() {
                 path="/profile"
                 element={
                   <PrivateRoute>
-                    <ProfilePage key={refreshKey} update={update}/>
+                    <ProfilePage key={refreshKey} update={update} />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/messages"
+                element={
+                  <PrivateRoute>
+                    <MessagesPage />
                   </PrivateRoute>
                 }
               />

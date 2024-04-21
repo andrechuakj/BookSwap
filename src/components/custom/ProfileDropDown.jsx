@@ -2,6 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { auth } from "../../firebase";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 import {
   DropdownMenu,
@@ -12,6 +13,7 @@ import {
 
 export function ProfileDropDown() {
   const { logOut } = useContext(AuthContext);
+  const navigateTo = useNavigate();
   const handleSignOut = async () => {
     return logOut();
   };
@@ -28,13 +30,11 @@ export function ProfileDropDown() {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuItem>
-          <a href="/profile">Personal Listings</a>
+        <DropdownMenuItem onClick={() => navigateTo("/profile")}>
+          <a>Personal Listings</a>
         </DropdownMenuItem>
-        <DropdownMenuItem>
-          <span className="text-red-500" onClick={handleSignOut}>
-            Log out
-          </span>
+        <DropdownMenuItem onClick={handleSignOut}>
+          <div className="text-red-500">Log out</div>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
