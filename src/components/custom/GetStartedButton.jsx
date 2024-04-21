@@ -1,6 +1,7 @@
-import React from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 const GetStartedButton = () => {
   const { loginUser } = useContext(AuthContext);

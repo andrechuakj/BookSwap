@@ -13,6 +13,7 @@ import NavBar from "./components/custom/NavBar";
 import PrivateRoute from "./routes/PrivateRoute";
 import LocationsPage from "./pages/LocationsPage";
 import NavigationProvider from "./contexts/NavigationProvider";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   const [refreshKey, setRefreshKey] = useState(0);
@@ -40,6 +41,14 @@ function App() {
                 element={
                   <PrivateRoute>
                     <LocationsPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <PrivateRoute>
+                    <ProfilePage />
                   </PrivateRoute>
                 }
               />

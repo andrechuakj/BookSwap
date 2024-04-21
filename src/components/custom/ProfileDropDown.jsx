@@ -18,8 +18,9 @@ export function ProfileDropDown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Avatar className="ml-5 mr-6 cursor-pointer">
+        <Avatar className="ml-5 mr-6 cursor-pointer hover:bg-gray-200">
           <AvatarImage
+            className="rounded-full px-1 py-1 w-15"
             src={auth.currentUser.photoURL}
             alt={auth.currentUser.displayName}
           />
@@ -28,10 +29,12 @@ export function ProfileDropDown() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuItem>
-          <a href="/home">Personal Listings</a>
+          <a href="/profile">Personal Listings</a>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <span className="text-red-500" onClick={handleSignOut}>Log out</span>
+          <span className="text-red-500" onClick={handleSignOut}>
+            Log out
+          </span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

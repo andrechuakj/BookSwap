@@ -7,7 +7,7 @@ import { ProfileDropDown } from "@/components/custom/ProfileDropDown";
 import { useLocation } from "react-router-dom";
 import AddBook from "@/components/custom/AddBook";
 
-const NavBar = ({update}) => {
+const NavBar = ({ update }) => {
   const { user } = useContext(AuthContext);
   const location = useLocation().pathname;
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -67,9 +67,19 @@ const NavBar = ({update}) => {
                 {!user && <SignInButton />}
                 {user && (
                   <>
-                    <MessageCircle className="cursor-pointer" size={33} absoluteStrokeWidth={true} />
+                    <MessageCircle
+                      className="cursor-pointer hover:bg-gray-100 rounded-xl p-2"
+                      size={50}
+                      strokeWidth={0.8}
+                      color="#6b6b6b"
+                    />
                     <ProfileDropDown />
-                    <AddBook open={dialogOpen} handleClose={handleDialogClose} handleOpen={handleDialogOpen} update={update}/>
+                    <AddBook
+                      open={dialogOpen}
+                      handleClose={handleDialogClose}
+                      handleOpen={handleDialogOpen}
+                      update={update}
+                    />
                   </>
                 )}
               </div>
